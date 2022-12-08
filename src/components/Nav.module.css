@@ -1,0 +1,14 @@
+.nav{
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+.nav span{
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+.link{
+    margin: auto;
+}

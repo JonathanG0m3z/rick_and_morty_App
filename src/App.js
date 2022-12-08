@@ -1,25 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import Cards from './components/Cards.jsx'
+import Nav from './components/Nav.jsx'
+import React from 'react'
+import { Route, useLocation } from 'react-router-dom';
+import About from './components/About';
+import Detail from './components/Detail';
+import Error from './components/Error';
+import Form from './components/Form';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App () {
+  const username = 'a';
+  const password = 'a';
+  const [access, setAccess] = React.useState(false);
+  const [characters, setCharacters] = React.useState([]); //
+  function onSearch(id) {
+    fetch(`https://rickandmortyapi.com/api/character/${id}`)
+       .then((response) => response.json())
+       .then((data) => {
+          if (data.name) {
+             setCharacters((oldChars) => [...oldChars, data]);
+          } else {
+             window.alert('No hay personajes con ese ID');
+          }
+       });
+ }
+ function onClose(id) {
+  setCharacters(
+    characters.filter((character)=>character.id!==id)
+  )
+ }
+
+ function login(userData) {
+  if (userData.username===username && userData.password === password) {
+    setAccess(true);
+    window.location.replace('/home');
+  }
+ }
+
+//  React.useEffect(() => {
+//   window.location.pathname!=='/' && !access && window.location.replace('/');
+// }, [access]);
+
+function logOut() {
+  setAccess(false);
+  window.location.replace('/');
 }
 
-export default App;
+  return (
+    <>
+      <div className='App' style={{ padding: '25px' }}>
+        {useLocation().pathname!=='/' && <Nav onSearch={onSearch} logOut={logOut} />}
+        
+        <Route exact path="/home" render={(obj) => 
+          <div class='cards'>
+            <Cards
+              characters={characters}
+              onClose={onClose}
+            />
+          </div>
+        }/>
+        <Route path="/about" component={About} /> 
+
+        <Route path="/detail/:detailId" render={(obj) =><Detail />}/>
+        {/* <NotFoundRoute handler={Error} /> */}
+
+        <Route exact path='/' render={(obj) => <Form login={login} />} />
+    </div>
+    </>
+  )
+    
+}
+
+export default App

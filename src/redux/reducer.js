@@ -2,7 +2,7 @@ import { ADD_FAVORITE, DELETE_FAVORITE } from "./actions";
 
 const initialState = {myFavorites: []};
 
-const reducer = (state = initialState, action)=>{
+const rootReducer = (state = initialState, action)=>{
     switch (action.type) {
         case ADD_FAVORITE:
             return {...state,
@@ -10,7 +10,7 @@ const reducer = (state = initialState, action)=>{
             };
         case DELETE_FAVORITE:
             return {...state,
-                myFavorites: state.myFavorites.filter((character)=>character.id!==action.payload)
+                myFavorites: state.myFavorites.filter((character)=>character.id!=action.payload)
             };
     
         default:
@@ -18,5 +18,5 @@ const reducer = (state = initialState, action)=>{
     }
 }
 
-export default reducer;
+export default rootReducer;
 

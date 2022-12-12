@@ -8,6 +8,9 @@ export default function Nav(props) {
             <Link className={styles.link} to="/home">
                 <span>Home</span>
             </Link>
+            <Link className={styles.link} to="/favorites">
+                <span>Favorites</span>
+            </Link>
             <Link className={styles.link} to="/about">
                <span>About</span> 
             </Link>

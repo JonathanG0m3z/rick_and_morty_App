@@ -1,38 +1,42 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./Card.module.css";
 import { addFavorite, deleteFavorite } from "../redux/actions";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 
-export const Card = (props)=> {
+export default function Card(props) {
+  const dispatch = useDispatch();
+  const myFavorites = useSelector((state)=>state.myFavorites);
+  const location = useLocation();
+
   const [isFav, setIsFav] = React.useState(false);
 
   const handleFavorite = (e)=>{
     if(isFav){
+      dispatch(deleteFavorite(e.target.id));
       setIsFav(false);
-      props.deleteFavorite(e.target.key);
     }
     if (!isFav) {
       setIsFav(true);
-      props.addFavorite(props);
+      dispatch(addFavorite(props));
     }
   }
-//   React.useEffect(() => {
-//     props.myFavorites.forEach((fav) => {
-//        if (fav.id === props.id) {
-//           setIsFav(true);
-//        }
-//     });
-//  }, [props.myFavorites]);
+  React.useEffect(() => {
+    myFavorites.forEach((fav) => {
+       if (fav.id === props.id) {
+          setIsFav(true);
+       }
+    });
+ }, [myFavorites]);
   return (
     <>
         <div className={styles.divCard}>
           <div className={styles.divButton}>
           {
-            isFav ? (<button onClick={handleFavorite}>❤️</button>) : 
-            (<button onClick={handleFavorite}>🤍</button>)
+            isFav ? (<button id={props.id} onClick={handleFavorite}>❤️</button>) : 
+            (<button id={props.id} onClick={handleFavorite}>🤍</button>)
           }
-            <button className={styles.buttonCard} onClick={() => props.onClose(props.id)}>x</button>
+            {location.pathname!== '/favorites' && <button className={styles.buttonCard} onClick={() => props.onClose(props.id)}>x</button>}
           </div>
           <h2 className={styles.name}>{props.name}</h2>
           <Link to={`/detail/${props.id}`}>
@@ -46,19 +50,3 @@ export const Card = (props)=> {
     </>
   );
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return{
-//     addFavorite: ()=>dispatch(addFavorite()),
-//     deleteFavorite: ()=>dispatch(deleteFavorite())
-//   }
-// }
-// const mapStateToProps = (state)=>{
-//   return{
-//     myFavorites: state.myFavorites
-// }
-// }
-// export const conex = connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Card)

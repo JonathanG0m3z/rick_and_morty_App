@@ -7,6 +7,7 @@ import About from './components/About';
 import Detail from './components/Detail';
 import Error from './components/Error';
 import Form from './components/Form';
+import { useSelector } from 'react-redux';
 
 function App () {
   const username = 'a';
@@ -45,6 +46,7 @@ function logOut() {
   setAccess(false);
   window.location.replace('/');
 }
+const myFavorites = useSelector((state)=>state.myFavorites);
 
   return (
     <>
@@ -56,6 +58,13 @@ function logOut() {
             <Cards
               characters={characters}
               onClose={onClose}
+            />
+          </div>
+        }/>
+        <Route exact path="/favorites" render={(obj) => 
+          <div class='cards'>
+            <Cards
+              characters={myFavorites}
             />
           </div>
         }/>

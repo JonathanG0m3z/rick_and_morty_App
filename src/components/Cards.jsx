@@ -1,9 +1,15 @@
 import Card from './Card';
+import styled from 'styled-components'
+
+const Container = styled.div`
+width: 95%;
+`
 
 export default function Cards(props) {
    const { characters } = props;
    return (
-            characters.map(({name,species,gender,image,id})=>{
+      <Container>
+         {characters.map(({name,species,gender,image,id})=>{
                return <Card 
                id={id}
                name={name}
@@ -12,6 +18,9 @@ export default function Cards(props) {
                image={image}
                onClose={props.onClose}
                />
-            })
+            })}
+      </Container>
+         
+            
    )
 }

@@ -2,7 +2,7 @@ import React from "react";
 import styles from './Form.module.css'
 
 export default function Form(props) {
-    const [userData, setUserData] = React.useState({username:'', password:''});
+    const [userData, setUserData] = React.useState({username:'Automatic login', password:'12345'});
     const [errors, setError] = React.useState({username:'', password:''});
 
     React.useEffect(()=>{
@@ -10,9 +10,9 @@ export default function Form(props) {
     }, [userData]);
 
     const handleInputChange = (event)=>{
-        setUserData({
-            ...userData,
-            [event.target.name]: event.target.value});
+        // setUserData({
+        //     ...userData,
+        //     [event.target.name]: event.target.value});
     };
 
     function validation() {
@@ -42,9 +42,9 @@ export default function Form(props) {
         <div className={styles.divLogin}>
             <form action="" onSubmit={handleSubmit}>
                 <label htmlFor="">Username</label>
-            <input autoComplete="off" className={errors.username!=='' ? styles.inputError : ''} onChange={handleInputChange} value={userData.username} type="text" name="username" />
+            <input autoComplete="off" className={errors.username!=='' ? styles.inputError : ''} onChange={handleInputChange} value="Automatic login" type="text" name="username" />
             <label htmlFor="">Password</label>
-            <input className={errors.password!=='' ? styles.inputError : ''} onChange={handleInputChange} value={userData.password} type="password" name="password" />
+            <input className={errors.password!=='' ? styles.inputError : ''} onChange={handleInputChange} value="12345" type="password" name="password" />
             <button name="login" type="submit">LOGIN</button>
             </form>
             

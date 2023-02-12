@@ -10,8 +10,8 @@ import Form from './components/Form';
 import { useSelector } from 'react-redux';
 
 function App () {
-  const username = 'a';
-  const password = 'a';
+  const username = 'Automatic login';
+  const password = '12345';
   const [access, setAccess] = React.useState(false);
   const [characters, setCharacters] = React.useState([]); //
   function onSearch(id) {
